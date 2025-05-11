@@ -8,18 +8,20 @@ import (
 )
 
 var SignalLog []types.Signal
+var SignalInbox = make(chan types.Signal, 100)
 
-// InitSignalEngine — запуск сигнального движка
+// InitSignalEngine — запуск сигнального движка и процессора
 func InitSignalEngine() {
 	fmt.Println("[SignalEngine] Signal engine initialized")
+	go processInbox()
 }
 
-// GenerateID — временный генератор ID (упрощённый)
+// GenerateID — генератор ID
 func GenerateID() string {
 	return fmt.Sprintf("sig_%d", time.Now().UnixNano())
 }
 
-// CalculateMass — масса = энергия × (1 + сумма эмоций)
+// CalculateMass — масса сигнала = энергия × (1 + сумма эмоций)
 func CalculateMass(energy float64, emotions map[string]float64) float64 {
 	sum := 0.0
 	for _, v := range emotions {
@@ -28,7 +30,7 @@ func CalculateMass(energy float64, emotions map[string]float64) float64 {
 	return energy * (1.0 + sum)
 }
 
-// InitializeDimensions — заглушка координат
+// InitializeDimensions — базовые координаты
 func InitializeDimensions() map[string]float64 {
 	return map[string]float64{
 		"time": float64(time.Now().Unix()),
@@ -48,12 +50,18 @@ func GenerateSignal(origin, content, signalType string, energy float64, emotion 
 		Dimensions:   InitializeDimensions(),
 		Timestamp:    time.Now(),
 	}
-	LogSignal(s)
 	return s
 }
 
-// LogSignal — сохранение сигнала
+// LogSignal — запись сигнала
 func LogSignal(s types.Signal) {
 	SignalLog = append(SignalLog, s)
 	fmt.Printf("[SignalEngine] New signal: [%s] %s (mass=%.2f)\n", s.Type, s.Content, s.Mass)
+}
+
+// processInbox — обработка сигналов из канала SignalInbox
+func processInbox() {
+	for s := range SignalInbox {
+		LogSignal(s)
+	}
 }
