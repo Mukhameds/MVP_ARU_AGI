@@ -11,11 +11,13 @@ import (
 	"github.com/Mukhameds/MVP_ARU_AGI/core/reflexengine"
 	"github.com/Mukhameds/MVP_ARU_AGI/core/ghostfield"
 	"github.com/Mukhameds/MVP_ARU_AGI/core/hemisphere"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/consciousnesshub"
 )
 
 func main() {
 	fmt.Println("🔵 ARU-MVP initializing...")
 
+	// Запуск базовых модулей
 	memoryengine.InitMemory()
 	flowengine.InitFlowEngine(1)
 	hemisphere.ActivateHemispheres([]string{"logic", "emotion", "goal"})
@@ -23,6 +25,10 @@ func main() {
 	instinctcore.LoadInstincts()
 	signalengine.InitSignalEngine()
 
+	// Хаб сознания
+	consciousnesshub.InitHub("ARU-CORE-01")
+
+	// Параллельные процессы
 	go loopGhostField()
 	go loopInstincts()
 
