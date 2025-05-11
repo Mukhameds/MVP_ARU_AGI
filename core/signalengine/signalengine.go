@@ -1,0 +1,59 @@
+package signalengine
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+)
+
+var SignalLog []types.Signal
+
+// InitSignalEngine — запуск сигнального движка
+func InitSignalEngine() {
+	fmt.Println("[SignalEngine] Signal engine initialized")
+}
+
+// GenerateID — временный генератор ID (упрощённый)
+func GenerateID() string {
+	return fmt.Sprintf("sig_%d", time.Now().UnixNano())
+}
+
+// CalculateMass — масса = энергия × (1 + сумма эмоций)
+func CalculateMass(energy float64, emotions map[string]float64) float64 {
+	sum := 0.0
+	for _, v := range emotions {
+		sum += v
+	}
+	return energy * (1.0 + sum)
+}
+
+// InitializeDimensions — заглушка координат
+func InitializeDimensions() map[string]float64 {
+	return map[string]float64{
+		"time": float64(time.Now().Unix()),
+	}
+}
+
+// GenerateSignal — создание нового сигнала
+func GenerateSignal(origin, content, signalType string, energy float64, emotion map[string]float64) types.Signal {
+	s := types.Signal{
+		ID:           GenerateID(),
+		Type:         signalType,
+		Content:      content,
+		Energy:       energy,
+		Mass:         CalculateMass(energy, emotion),
+		EmotionalTag: emotion,
+		Origin:       origin,
+		Dimensions:   InitializeDimensions(),
+		Timestamp:    time.Now(),
+	}
+	LogSignal(s)
+	return s
+}
+
+// LogSignal — сохранение сигнала
+func LogSignal(s types.Signal) {
+	SignalLog = append(SignalLog, s)
+	fmt.Printf("[SignalEngine] New signal: [%s] %s (mass=%.2f)\n", s.Type, s.Content, s.Mass)
+}
