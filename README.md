@@ -43,8 +43,8 @@ an alternative to LLMs focused on:
 
 ### 🧩 Visualization
 
-📸 **[SEE DEMO](https://github.com/Mukhameds/ARU-AGI-Project#demo)**
-🧠 **[ARU SCHEME (PDF)](https://github.com/Mukhameds/ARU-AGI-Project/blob/main/sections/IV_SignalSystem.html)**
+📸 **[SEE DEMO]()**
+🧠 **[ARU SCHEME (PDF)]()**
 
 ![Thinking Loop](https://raw.githubusercontent.com/Mukhameds/ARU-AGI-Project/main/assets/thinking-loop.gif)
 
