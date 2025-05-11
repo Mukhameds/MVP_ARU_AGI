@@ -28,9 +28,16 @@ func ComputePriority(signal types.Signal) float64 {
 		}
 	}
 
+	// Усиление эмоции в вычислениях
+	if modifier > 2.0 {
+		modifier = 2.0
+	}
+
 	priority := base * modifier
 	return priority
 }
+
+
 
 // GenerateEmotion — формирует доминирующую эмоцию
 func GenerateEmotion(signal types.Signal) types.Emotion {
@@ -92,3 +99,5 @@ func normalize(x float64) float64 {
 	}
 	return x
 }
+
+

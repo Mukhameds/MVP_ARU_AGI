@@ -2,13 +2,17 @@ package instinctcore
 
 import (
 	"fmt"
-	"time"
+	
+	"github.com/Mukhameds/MVP_ARU_AGI/core/willengine"  // Импортируем willengine
+	"github.com/Mukhameds/MVP_ARU_AGI/core/signalengine"
 )
 
 var instincts = []string{
-	"preserve_self",
-	"explore_environment",
-	"serve_architect",
+	"preserve_self",         // Защита
+	"explore_environment",   // Исследование
+	"serve_architect",       // Выполнение задач
+	"seek_knowledge",        // Поиск знаний
+	"avoid_danger",          // Избегание опасности
 }
 
 // LoadInstincts — загрузка инстинктов
@@ -19,10 +23,40 @@ func LoadInstincts() {
 	}
 }
 
-// TickInstincts — периодическая активация инстинктов
+// TickInstincts — активация инстинктов
 func TickInstincts() {
 	for _, inst := range instincts {
-		fmt.Printf("[InstinctCore] Instinct active: %s\n", inst)
-		time.Sleep(500 * time.Millisecond)
+		ProcessInstinct(inst)
 	}
+}
+
+// ProcessInstinct — обработка инстинкта
+func ProcessInstinct(instinct string) {
+	switch instinct {
+	case "preserve_self":
+		triggerSignal("danger", "defend_self", 1.0)
+	case "explore_environment":
+		triggerSignal("exploration", "search_area", 0.7)
+	case "serve_architect":
+		triggerSignal("task", "fulfill_goal", 0.9)
+	case "seek_knowledge":
+		triggerSignal("study", "gain_knowledge", 0.6)
+	case "avoid_danger":
+		triggerSignal("threat", "escape_danger", 1.0)
+	}
+
+	// Генерация воли после сигнала
+	for _, signal := range signalengine.SignalLog {
+		// Генерация воли для каждого сигнала
+		willengine.GenerateWill(signal)
+	}
+}
+
+
+// triggerSignal — генерация сигнала для инстинкта
+func triggerSignal(content, goal string, energy float64) {
+	emotion := map[string]float64{"fear": 0.9} // Пример для инстинкта "защита"
+	signal := signalengine.GenerateSignal("InstinctCore", content, "instinct", energy, emotion)
+	signalengine.SignalInbox <- signal
+	fmt.Println("[InstinctCore] Triggered signal:", content)
 }

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/Mukhameds/MVP_ARU_AGI/core/thoughtengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/consciousnesshub"
 	"github.com/Mukhameds/MVP_ARU_AGI/types"
 )
 
@@ -63,5 +65,8 @@ func LogSignal(s types.Signal) {
 func processInbox() {
 	for s := range SignalInbox {
 		LogSignal(s)
+		thought := thoughtengine.ReceiveSignal(s)
+		emotion := thoughtengine.LastEmotion()
+		consciousnesshub.UpdateSnapshot(s, emotion, thought.Thread)
 	}
 }

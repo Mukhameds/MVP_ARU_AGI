@@ -31,8 +31,11 @@ func main() {
 	// Параллельные процессы
 	go loopGhostField()
 	go loopInstincts()
+	go loopObserve()
+
 
 	fmt.Println("✅ ARU-MVP ready.")
+
 	select {}
 }
 
@@ -47,5 +50,15 @@ func loopInstincts() {
 	for {
 		instinctcore.TickInstincts()
 		time.Sleep(3 * time.Second)
+	}
+}
+
+func loopObserve() {
+	for {
+		time.Sleep(10 * time.Second)
+		fmt.Println()
+		fmt.Println("🌀 OBSERVE:")
+		consciousnesshub.Observe()
+		fmt.Println()
 	}
 }

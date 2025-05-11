@@ -68,3 +68,13 @@ func checkQueue() {
 		Schedule(next)
 	}
 }
+
+// CreateThread — создаёт объект потока, но не запускает его
+func CreateThread(signal types.Signal) ThoughtThread {
+	return ThoughtThread{
+		ID:        signal.ID,
+		Signal:    signal,
+		StartTime: time.Now(),
+		Active:    false, // ещё не запущен
+	}
+}

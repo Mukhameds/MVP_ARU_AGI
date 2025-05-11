@@ -4,6 +4,16 @@ import (
 	"fmt"
 )
 
+type QBit struct {
+	ID        string
+	State     string
+	Context   []string
+	Tags      []string
+	Emotion   float64
+	LinkedTo  []string
+}
+
+
 // MemoryEngine — простая инициализация памяти
 var Memory = make(map[string]string)
 
