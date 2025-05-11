@@ -77,7 +77,8 @@ func processActivePhantoms() {
 				0.5,
 				p.EmotionBias,
 			)
-			signalengine.SignalInbox <- sig
+			signalengine.ReceiveSignal(sig)
+
 			fmt.Println("[GhostField] Phantom fired:", p.ID)
 		}
 

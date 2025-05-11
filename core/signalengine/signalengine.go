@@ -70,3 +70,8 @@ func processInbox() {
 		consciousnesshub.UpdateSnapshot(s, emotion, thought.Thread)
 	}
 }
+
+// ReceiveSignal — внешний вход сигнала в систему (например, фантомов или CLI)
+func ReceiveSignal(s types.Signal) {
+	SignalInbox <- s
+}

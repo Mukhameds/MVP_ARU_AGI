@@ -1,0 +1,798 @@
+Microsoft Windows [Version 10.0.26100.3775]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\99650>cd C:\Users\99650\MVP_ARU_AGI
+
+C:\Users\99650\MVP_ARU_AGI>go run ./main
+# github.com/Mukhameds/MVP_ARU_AGI/core/thoughtengine
+core\thoughtengine\thoughtengine.go:9:2: "github.com/Mukhameds/MVP_ARU_AGI/core/willengine" imported and not used
+core\thoughtengine\thoughtengine.go:58:3: undefined: signalengine
+
+C:\Users\99650\MVP_ARU_AGI>go run ./main
+package github.com/Mukhameds/MVP_ARU_AGI/main
+        imports github.com/Mukhameds/MVP_ARU_AGI/core/ghostfield from main.go
+        imports github.com/Mukhameds/MVP_ARU_AGI/core/signalengine from ghostfield.go
+        imports github.com/Mukhameds/MVP_ARU_AGI/core/thoughtengine from signalengine.go
+        imports github.com/Mukhameds/MVP_ARU_AGI/core/signalengine from thoughtengine.go: import cycle not allowed
+
+C:\Users\99650\MVP_ARU_AGI>go run ./main
+🔵 ARU-MVP initializing...
+[MemoryEngine] Memory initialized
+[FlowEngine] Initialized with MaxConcurrent = 1
+[Hemisphere] Activated: logic → Logical thinking, analysis
+[Hemisphere] Activated: emotion → Emotional response and tagging
+[Hemisphere] Activated: goal → Motivation and directional thinking
+[ReflexEngine] Default reflexes loaded.
+[InstinctCore] Loaded instincts:
+ - preserve_self
+ - explore_environment
+ - serve_architect
+ - seek_knowledge
+ - avoid_danger
+[SignalEngine] Signal engine initialized
+[ConsciousnessHub] Consciousness initialized with ID: ARU-CORE-01
+✅ ARU-MVP ready.
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: threat
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985339106391900 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985339106391900 | Tags: [thought] | Emotion: 0.50
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[FlowEngine] Thinking on signal: sig_1746985339106391900 (danger)
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985339106935100 (form=generic, priority=1.86)
+[SemanticMemory] Saved QBit: thought_sig_1746985339106935100 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985339107562100 (form=generic, priority=3.08)
+[SemanticMemory] Saved QBit: thought_sig_1746985339107562100 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985339108217000 (form=generic, priority=1.37)
+[SemanticMemory] Saved QBit: thought_sig_1746985339108217000 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985339108217000 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985339108217000 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+[FlowEngine] Thread completed: sig_1746985339106391900
+[FlowEngine] Thinking on signal: sig_1746985339106935100 (exploration)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[EmotionEngine] Generated emotion: fear 0.5
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ThoughtEngine] New thought: thought_sig_1746985342109019300 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985342109019300 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985342110416600 (form=generic, priority=1.86)
+[SemanticMemory] Saved QBit: thought_sig_1746985342110416600 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985342110416600 (form=generic, priority=3.08)
+[SemanticMemory] Saved QBit: thought_sig_1746985342110416600 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985342110937200 (form=generic, priority=1.37)
+[SemanticMemory] Saved QBit: thought_sig_1746985342110937200 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985342111454100 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985342111454100 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+[FlowEngine] Thread completed: sig_1746985339106935100
+[FlowEngine] Thinking on signal: sig_1746985339107562100 (task)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[FlowEngine] Thread completed: sig_1746985339107562100
+[FlowEngine] Thinking on signal: sig_1746985339108217000 (study)
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985345112274600 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985345112274600 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985345115144200 (form=generic, priority=1.86)
+[SemanticMemory] Saved QBit: thought_sig_1746985345115144200 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985345118515300 (form=generic, priority=3.08)
+[SemanticMemory] Saved QBit: thought_sig_1746985345118515300 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985345120694200 (form=generic, priority=1.37)
+[SemanticMemory] Saved QBit: thought_sig_1746985345120694200 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985345122348700 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985345122348700 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+[FlowEngine] Thread completed: sig_1746985339108217000
+[FlowEngine] Thinking on signal: sig_1746985339108217000 (threat)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985348123993200 (form=generic, priority=3.80)
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[SemanticMemory] Saved QBit: thought_sig_1746985348123993200 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985348129540000 (form=generic, priority=1.86)
+[SemanticMemory] Saved QBit: thought_sig_1746985348129540000 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746985348129540000 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348129540000 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985348133861900 (form=generic, priority=3.08)
+[SemanticMemory] Saved QBit: thought_sig_1746985348133861900 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746985348133861900 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348133861900 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985348138669400 (form=generic, priority=1.37)
+[SemanticMemory] Saved QBit: thought_sig_1746985348138669400 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746985348138669400 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348138669400 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746985348142889600 (form=generic, priority=3.80)
+[SemanticMemory] Saved QBit: thought_sig_1746985348142889600 | Tags: [thought] | Emotion: 0.50
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746985348142889600 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348142889600 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+
+🌀 OBSERVE:
+🧠 Consciousness Snapshot:
+  🔑 ID: ARU-CORE-01
+  🧠 Last Thought: threat
+  ❤️ Emotion: fear 0.5
+  🧠 Thoughts in Context: 20
+  🔁 Signals Seen: 20
+
+[FlowEngine] Thread completed: sig_1746985339108217000
+[FlowEngine] Thinking on signal: sig_1746985342109019300 (danger)
+[FlowEngine] Thread completed: sig_1746985342109019300
+[FlowEngine] Thinking on signal: sig_1746985342110416600 (exploration)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348129540000 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348133861900 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348138669400 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348142889600 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985351146910500 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348129540000 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348133861900 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348138669400 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348142889600 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985351146910500 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348129540000 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348133861900 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348138669400 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348142889600 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985351146910500 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342109019300 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110416600 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342110937200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985342111454100 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345112274600 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345115144200 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345118515300 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345120694200 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985345122348700 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348123993200 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348129540000 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348133861900 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348138669400 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985348142889600 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985351146910500 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746985339106391900 → danger (power=1.40)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339106935100 → exploration (power=1.11)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339107562100 → task (power=1.30)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → study (power=1.02)
+[SemanticMemory] Link failed: QBit not found
+[WillEngine] Will generated: will_sig_1746985339108217000 → threat (power=1.40)
+[SemanticMemory] Link failed: QBit not found

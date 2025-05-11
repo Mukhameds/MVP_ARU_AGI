@@ -3,7 +3,7 @@ package instinctcore
 import (
 	"fmt"
 	
-	"github.com/Mukhameds/MVP_ARU_AGI/core/willengine"  // Импортируем willengine
+	
 	"github.com/Mukhameds/MVP_ARU_AGI/core/signalengine"
 )
 
@@ -48,7 +48,8 @@ func ProcessInstinct(instinct string) {
 	// Генерация воли после сигнала
 	for _, signal := range signalengine.SignalLog {
 		// Генерация воли для каждого сигнала
-		willengine.GenerateWill(signal)
+		signalengine.ReceiveSignal(signal)
+
 	}
 }
 

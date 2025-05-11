@@ -1,0 +1,1532 @@
+"C:\Users\99650\MVP_ARU_AGI\go.mod":
+module github.com/Mukhameds/MVP_ARU_AGI
+
+go 1.20
+
+"C:\Users\99650\MVP_ARU_AGI\README.md":
+# MVP_ARU_AGI
+
+"C:\Users\99650\MVP_ARU_AGI\main\main.go":
+package main
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/core/flowengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/signalengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/memoryengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/instinctcore"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/reflexengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/ghostfield"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/hemisphere"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/consciousnesshub"
+)
+
+func main() {
+	fmt.Println("🔵 ARU-MVP initializing...")
+
+	// Запуск базовых модулей
+	memoryengine.InitMemory()
+	flowengine.InitFlowEngine(1)
+	hemisphere.ActivateHemispheres([]string{"logic", "emotion", "goal"})
+	reflexengine.LoadDefaultReflexes()
+	instinctcore.LoadInstincts()
+	signalengine.InitSignalEngine()
+
+	// Хаб сознания
+	consciousnesshub.InitHub("ARU-CORE-01")
+
+	// Параллельные процессы
+	go loopGhostField()
+	go loopInstincts()
+	go loopObserve()
+
+
+	fmt.Println("✅ ARU-MVP ready.")
+
+	select {}
+}
+
+func loopGhostField() {
+	for {
+		ghostfield.TickGhostField()
+		time.Sleep(5 * time.Second)
+	}
+}
+
+func loopInstincts() {
+	for {
+		instinctcore.TickInstincts()
+		time.Sleep(3 * time.Second)
+	}
+}
+
+func loopObserve() {
+	for {
+		time.Sleep(10 * time.Second)
+		fmt.Println()
+		fmt.Println("🌀 OBSERVE:")
+		consciousnesshub.Observe()
+		fmt.Println()
+	}
+}
+
+"C:\Users\99650\MVP_ARU_AGI\types\signal.go":
+package types
+
+import (
+	"time"
+)
+
+// Signal — базовая единица сигнального мышления ARU
+type Signal struct {
+	ID            string
+	Type          string            // "external", "emotion", "memory", "phantom", "instinct", "will"
+	Content       string            // Текст, команда, гипотеза и т.д.
+	Energy        float64           // Энергия сигнала
+	Mass          float64           // Масса (влияет на приоритет мышления)
+	EmotionalTag  map[string]float64 // {"fear": 0.9, "curiosity": 0.5}
+	Origin        string            // Источник: User, Reflex, Memory и др.
+	Dimensions    map[string]float64 // Пространственные и ассоциативные координаты
+	Timestamp     time.Time         // Время генерации сигнала
+}
+
+// Emotion — внутренняя эмоциональная реакция на сигнал
+type Emotion struct {
+	Type  string
+	Power float64
+}
+
+
+"C:\Users\99650\MVP_ARU_AGI\core\consciousnesshub\consciousnesshub.go"
+package consciousnesshub
+
+import (
+	"fmt"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/core/willengine"  // Импортируем willengine
+	"github.com/Mukhameds/MVP_ARU_AGI/core/flowengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/memoryengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+)
+
+type ConsciousnessHub struct {
+	ActiveContext   []flowengine.ThoughtThread
+	MemoryOverlay   []memoryengine.QBit
+	SignalSnapshot  []types.Signal
+	WillSnapshot    []willengine.Will // Добавляем волю в контекст
+	EmotionalState  types.Emotion
+	CoreIdentity    string
+}
+
+
+var Hub ConsciousnessHub
+
+// InitHub — инициализация хаба сознания
+func InitHub(coreID string) {
+	Hub = ConsciousnessHub{
+		CoreIdentity: coreID,
+	}
+	fmt.Println("[ConsciousnessHub] Consciousness initialized with ID:", coreID)
+}
+
+// UpdateSnapshot — обновление состояния сознания с волей
+func UpdateSnapshot(signal types.Signal, emotion types.Emotion, context flowengine.ThoughtThread) {
+	Hub.SignalSnapshot = append(Hub.SignalSnapshot, signal)
+	Hub.EmotionalState = emotion
+	Hub.ActiveContext = append(Hub.ActiveContext, context)
+
+	// Добавляем волю в контекст
+	will := willengine.GenerateWill(signal)
+	Hub.WillSnapshot = append(Hub.WillSnapshot, will)
+
+	fmt.Printf("[ConsciousnessHub] Context updated: %s | Emotion: %s (%.2f) | Will: %s\n", 
+		signal.Content, emotion.Type, emotion.Power, will.Goal)
+}
+
+
+// Observe — просмотр текущего состояния сознания
+func Observe() {
+	fmt.Println("🧠 Consciousness Snapshot:")
+	fmt.Println("  🔑 ID:", Hub.CoreIdentity)
+	fmt.Println("  🧠 Last Thought:", lastThought())
+	fmt.Println("  ❤️ Emotion:", Hub.EmotionalState.Type, Hub.EmotionalState.Power)
+	fmt.Println("  🧠 Thoughts in Context:", len(Hub.ActiveContext))
+	fmt.Println("  🔁 Signals Seen:", len(Hub.SignalSnapshot))
+}
+
+func lastThought() string {
+	if len(Hub.SignalSnapshot) == 0 {
+		return "<none>"
+	}
+	return Hub.SignalSnapshot[len(Hub.SignalSnapshot)-1].Content
+}
+
+
+"C:\Users\99650\MVP_ARU_AGI\core\emotionengine\emotionengine.go":
+package emotionengine
+
+import (
+	"fmt"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+)
+
+// Вес эмоций — влияет на приоритет сигнала
+var EmotionWeights = map[string]float64{
+	"fear":          1.4,
+	"inspiration":   1.3,
+	"anger":         1.2,
+	"humility":      0.9,
+	"curiosity":     1.1,
+	"responsibility": 1.25,
+}
+
+// ComputePriority — вычисление приоритета на основе эмоции
+func ComputePriority(signal types.Signal) float64 {
+	base := signal.Mass * signal.Energy
+	modifier := 1.0
+
+	for emo, power := range signal.EmotionalTag {
+		weight, exists := EmotionWeights[emo]
+		if exists {
+			modifier += weight * power
+		}
+	}
+
+	// Усиление эмоции в вычислениях
+	if modifier > 2.0 {
+		modifier = 2.0
+	}
+
+	priority := base * modifier
+	return priority
+}
+
+
+
+// GenerateEmotion — формирует доминирующую эмоцию
+func GenerateEmotion(signal types.Signal) types.Emotion {
+	instinctInfluence := extractInstinctComponent(signal)
+	memoryInfluence := extractMemoryComponent(signal)
+	conflictInfluence := detectConflict(signal)
+
+	total := instinctInfluence + memoryInfluence + conflictInfluence
+	dominant := selectDominantEmotion(signal)
+
+	em := types.Emotion{
+		Type:  dominant,
+		Power: normalize(total),
+	}
+	fmt.Println("[EmotionEngine] Generated emotion:", em.Type, em.Power)
+	return em
+}
+
+// ─── Вспомогательные ───
+
+func extractInstinctComponent(signal types.Signal) float64 {
+	if signal.Origin == "InstinctCore" {
+		return 0.5
+	}
+	return 0.0
+}
+
+func extractMemoryComponent(signal types.Signal) float64 {
+	for key := range signal.EmotionalTag {
+		if key == "nostalgia" || key == "regret" {
+			return 0.3
+		}
+	}
+	return 0.0
+}
+
+func detectConflict(signal types.Signal) float64 {
+	if signal.Type == "error" || signal.Type == "paradox" {
+		return 0.4
+	}
+	return 0.0
+}
+
+func selectDominantEmotion(signal types.Signal) string {
+	maxPower := 0.0
+	dominant := "neutral"
+	for emo, power := range signal.EmotionalTag {
+		if power > maxPower {
+			maxPower = power
+			dominant = emo
+		}
+	}
+	return dominant
+}
+
+func normalize(x float64) float64 {
+	if x > 1.0 {
+		return 1.0
+	}
+	return x
+}
+
+
+
+
+"C:\Users\99650\MVP_ARU_AGI\core\flowengine\flowengine.go":
+package flowengine
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+)
+
+type ThoughtThread struct {
+	ID        string
+	Signal    types.Signal
+	StartTime time.Time
+	Active    bool
+}
+
+type FlowEngine struct {
+	ActiveThreads map[string]*ThoughtThread
+	PriorityQueue []types.Signal
+	MaxConcurrent int
+}
+
+var engine = FlowEngine{
+	ActiveThreads: make(map[string]*ThoughtThread),
+	PriorityQueue: []types.Signal{},
+	MaxConcurrent: 1,
+}
+
+// Инициализация потока мышления
+func InitFlowEngine(maxThreads int) {
+	engine.MaxConcurrent = maxThreads
+	fmt.Println("[FlowEngine] Initialized with MaxConcurrent =", maxThreads)
+}
+
+// Планирование сигнала
+func Schedule(th types.Signal) {
+	if len(engine.ActiveThreads) < engine.MaxConcurrent {
+		thread := &ThoughtThread{
+			ID:        th.ID,
+			Signal:    th,
+			StartTime: time.Now(),
+			Active:    true,
+		}
+		engine.ActiveThreads[th.ID] = thread
+		go runThread(thread)
+	} else {
+		engine.PriorityQueue = append(engine.PriorityQueue, th)
+		fmt.Println("[FlowEngine] Queued:", th.Content)
+	}
+}
+
+// Исполнение потока мышления
+func runThread(t *ThoughtThread) {
+	fmt.Printf("[FlowEngine] Thinking on signal: %s (%s)\n", t.Signal.ID, t.Signal.Content)
+	time.Sleep(2 * time.Second)
+
+	t.Active = false
+	delete(engine.ActiveThreads, t.ID)
+	fmt.Println("[FlowEngine] Thread completed:", t.Signal.ID)
+
+	checkQueue()
+}
+
+func checkQueue() {
+	if len(engine.PriorityQueue) > 0 {
+		next := engine.PriorityQueue[0]
+		engine.PriorityQueue = engine.PriorityQueue[1:]
+		Schedule(next)
+	}
+}
+
+// CreateThread — создаёт объект потока, но не запускает его
+func CreateThread(signal types.Signal) ThoughtThread {
+	return ThoughtThread{
+		ID:        signal.ID,
+		Signal:    signal,
+		StartTime: time.Now(),
+		Active:    false, // ещё не запущен
+	}
+}
+
+"C:\Users\99650\MVP_ARU_AGI\core\ghostfield\ghostfield.go":
+package ghostfield
+
+import (
+	"fmt"
+	"math/rand"
+	"time"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/core/signalengine"
+)
+
+type Phantom struct {
+	ID           string
+	Topic        string
+	GeneratedAt  time.Time
+	TTL          int
+	EmotionBias  map[string]float64
+	Goal         string
+	Active       bool
+	Life float64 // от 1.0 до 0.0
+
+}
+
+var PhantomPool []Phantom
+
+func TickGhostField() {
+	// Частота создания фантомов
+	if rand.Float64() < 0.1 {
+		gen := GeneratePhantom("unresolved_thought", "clarify_direction", map[string]float64{"doubt": 0.6})
+		PhantomPool = append(PhantomPool, gen)
+		fmt.Println("[GhostField] New phantom:", gen.ID)
+	}
+
+	// Объединение схожих фантомов
+	MergePhantoms()
+
+	// Обработка оставшихся фантомов
+	processActivePhantoms()
+}
+
+
+func GeneratePhantom(topic string, goal string, emotion map[string]float64) Phantom {
+	return Phantom{
+		ID:          fmt.Sprintf("phantom_%d", rand.Intn(999999)),
+		Topic:       topic,
+		GeneratedAt: time.Now(),
+		TTL:         15,
+		EmotionBias: emotion,
+		Goal:        goal,
+		Active:      true,
+		Life: 1.0,
+
+	}
+}
+
+func processActivePhantoms() {
+	var survivors []Phantom
+	for _, p := range PhantomPool {
+		// Угасание жизни при каждом тике
+		p.Life -= 0.03
+		if p.Life <= 0 {
+			fmt.Println("[GhostField] Phantom decayed:", p.ID)
+			continue
+		}
+
+		// Если TTL вышел — это дополнительный выход
+		if int(time.Since(p.GeneratedAt).Seconds()) > p.TTL {
+			fmt.Println("[GhostField] Phantom expired:", p.ID)
+			continue
+		}
+
+		// Вероятность активации
+		if rand.Float64() < 0.3 {
+			sig := signalengine.GenerateSignal(
+				"GhostField",
+				p.Goal,
+				"phantom",
+				0.5,
+				p.EmotionBias,
+			)
+			signalengine.SignalInbox <- sig
+			fmt.Println("[GhostField] Phantom fired:", p.ID)
+		}
+
+		// Сохраняем живого фантома
+		survivors = append(survivors, p)
+	}
+	PhantomPool = survivors
+}
+
+// Объединение фантомов с похожими темами и эмоциями
+func MergePhantoms() {
+	var merged []Phantom
+
+	for i := 0; i < len(PhantomPool); i++ {
+		p1 := PhantomPool[i]
+		mergedFlag := false
+
+		for j := i + 1; j < len(PhantomPool); j++ {
+			p2 := PhantomPool[j]
+
+			// Объединяем, если тема и эмоции схожи
+			if p1.Topic == p2.Topic && SimilarEmotion(p1.EmotionBias, p2.EmotionBias) {
+				// Создаём новый фантом, слияние тем и эмоций
+				mergedPhantom := Phantom{
+					ID:          fmt.Sprintf("merged_%s_%s", p1.ID, p2.ID),
+					Topic:       p1.Topic,
+					GeneratedAt: time.Now(),
+					TTL:         max(p1.TTL, p2.TTL),
+					EmotionBias: mergeEmotions(p1.EmotionBias, p2.EmotionBias),
+					Goal:        p1.Goal, // можно комбинировать цели позже
+					Active:      true,
+					Life:        1.0,
+				}
+				merged = append(merged, mergedPhantom)
+				PhantomPool = append(PhantomPool[:i], PhantomPool[i+1:]...) // Удаляем старые фантомы
+				PhantomPool = append(PhantomPool[:j-1], PhantomPool[j:]...) // Удаляем старые фантомы
+				mergedFlag = true
+				break
+			}
+		}
+
+		if !mergedFlag {
+			merged = append(merged, p1)
+		}
+	}
+
+	PhantomPool = merged
+}
+
+// Функция для проверки схожести эмоций
+func SimilarEmotion(emotion1, emotion2 map[string]float64) bool {
+	for key, value := range emotion1 {
+		if emotion2[key] != value {
+			return false
+		}
+	}
+	return true
+}
+
+// Функция для объединения эмоций
+func mergeEmotions(emotion1, emotion2 map[string]float64) map[string]float64 {
+	merged := make(map[string]float64)
+	for key, value := range emotion1 {
+		merged[key] = value
+	}
+	for key, value := range emotion2 {
+		if _, exists := merged[key]; exists {
+			merged[key] += value
+		} else {
+			merged[key] = value
+		}
+	}
+	return merged
+}
+
+// Функция для нахождения максимального TTL
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+"C:\Users\99650\MVP_ARU_AGI\core\hemisphere\hemisphere.go":
+package hemisphere
+
+import (
+	"fmt"
+)
+
+// Hemisphere — структура полушария
+type Hemisphere struct {
+	Name    string
+	Active  bool
+	Purpose string
+}
+
+var Hemispheres = make(map[string]*Hemisphere)
+
+// ActivateHemispheres — активация нужных полушарий
+func ActivateHemispheres(names []string) {
+	for _, name := range names {
+		h := &Hemisphere{
+			Name:    name,
+			Active:  true,
+			Purpose: describe(name),
+		}
+		Hemispheres[name] = h
+		fmt.Printf("[Hemisphere] Activated: %s → %s\n", h.Name, h.Purpose)
+	}
+}
+
+// describe — назначение по имени
+func describe(name string) string {
+	switch name {
+	case "logic":
+		return "Logical thinking, analysis"
+	case "emotion":
+		return "Emotional response and tagging"
+	case "goal":
+		return "Motivation and directional thinking"
+	default:
+		return "Generic hemisphere"
+	}
+}
+
+"C:\Users\99650\MVP_ARU_AGI\core\instinctcore\instinctcore.go":
+package instinctcore
+
+import (
+	"fmt"
+	
+	"github.com/Mukhameds/MVP_ARU_AGI/core/willengine"  // Импортируем willengine
+	"github.com/Mukhameds/MVP_ARU_AGI/core/signalengine"
+)
+
+var instincts = []string{
+	"preserve_self",         // Защита
+	"explore_environment",   // Исследование
+	"serve_architect",       // Выполнение задач
+	"seek_knowledge",        // Поиск знаний
+	"avoid_danger",          // Избегание опасности
+}
+
+// LoadInstincts — загрузка инстинктов
+func LoadInstincts() {
+	fmt.Println("[InstinctCore] Loaded instincts:")
+	for _, inst := range instincts {
+		fmt.Println(" -", inst)
+	}
+}
+
+// TickInstincts — активация инстинктов
+func TickInstincts() {
+	for _, inst := range instincts {
+		ProcessInstinct(inst)
+	}
+}
+
+// ProcessInstinct — обработка инстинкта
+func ProcessInstinct(instinct string) {
+	switch instinct {
+	case "preserve_self":
+		triggerSignal("danger", "defend_self", 1.0)
+	case "explore_environment":
+		triggerSignal("exploration", "search_area", 0.7)
+	case "serve_architect":
+		triggerSignal("task", "fulfill_goal", 0.9)
+	case "seek_knowledge":
+		triggerSignal("study", "gain_knowledge", 0.6)
+	case "avoid_danger":
+		triggerSignal("threat", "escape_danger", 1.0)
+	}
+
+	// Генерация воли после сигнала
+	for _, signal := range signalengine.SignalLog {
+		// Генерация воли для каждого сигнала
+		willengine.GenerateWill(signal)
+	}
+}
+
+
+// triggerSignal — генерация сигнала для инстинкта
+func triggerSignal(content, goal string, energy float64) {
+	emotion := map[string]float64{"fear": 0.9} // Пример для инстинкта "защита"
+	signal := signalengine.GenerateSignal("InstinctCore", content, "instinct", energy, emotion)
+	signalengine.SignalInbox <- signal
+	fmt.Println("[InstinctCore] Triggered signal:", content)
+}
+
+
+"C:\Users\99650\MVP_ARU_AGI\core\memoryengine\memoryengine.go":
+package memoryengine
+
+import (
+	"fmt"
+)
+
+type QBit struct {
+	ID        string
+	State     string
+	Context   []string
+	Tags      []string
+	Emotion   float64
+	LinkedTo  []string
+}
+
+
+// MemoryEngine — простая инициализация памяти
+var Memory = make(map[string]string)
+
+// InitMemory — запуск хранилища памяти
+func InitMemory() {
+	fmt.Println("[MemoryEngine] Memory initialized")
+}
+
+// Save — сохранить элемент в память
+func Save(key, value string) {
+	Memory[key] = value
+	fmt.Printf("[MemoryEngine] Saved: %s → %s\n", key, value)
+}
+
+// Recall — извлечь элемент из памяти
+func Recall(key string) string {
+	if val, ok := Memory[key]; ok {
+		fmt.Printf("[MemoryEngine] Recalled: %s → %s\n", key, val)
+		return val
+	}
+	fmt.Printf("[MemoryEngine] Key not found: %s\n", key)
+	return ""
+}
+
+"C:\Users\99650\MVP_ARU_AGI\core\reflexengine\reflexengine.go":
+package reflexengine
+
+import (
+	"fmt"
+)
+
+type Reflex struct {
+	ID             string
+	TriggerPattern string
+	Reaction       string
+	Threshold      float64
+	Source         string
+	Modifiable     bool
+}
+
+var ReflexStorage []Reflex
+
+// LoadDefaultReflexes — загрузка базовых рефлексов
+func LoadDefaultReflexes() {
+	ReflexStorage = []Reflex{
+		{
+			ID:             "protect_core",
+			TriggerPattern: "danger",
+			Reaction:       "activate_defense",
+			Threshold:      0.6,
+			Source:         "Instinct",
+			Modifiable:     false,
+		},
+		{
+			ID:             "logic_error",
+			TriggerPattern: "contradiction",
+			Reaction:       "start_self_diagnosis",
+			Threshold:      0.7,
+			Source:         "Adapted",
+			Modifiable:     true,
+		},
+	}
+	fmt.Println("[ReflexEngine] Default reflexes loaded.")
+}
+
+// TickReflexes — проверка (заглушка)
+func TickReflexes() {
+	fmt.Println("[ReflexEngine] Reflex system tick.")
+}
+
+"C:\Users\99650\MVP_ARU_AGI\core\signalengine\signalengine.go":
+package signalengine
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/core/thoughtengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/consciousnesshub"
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+)
+
+var SignalLog []types.Signal
+var SignalInbox = make(chan types.Signal, 100)
+
+// InitSignalEngine — запуск сигнального движка и процессора
+func InitSignalEngine() {
+	fmt.Println("[SignalEngine] Signal engine initialized")
+	go processInbox()
+}
+
+// GenerateID — генератор ID
+func GenerateID() string {
+	return fmt.Sprintf("sig_%d", time.Now().UnixNano())
+}
+
+// CalculateMass — масса сигнала = энергия × (1 + сумма эмоций)
+func CalculateMass(energy float64, emotions map[string]float64) float64 {
+	sum := 0.0
+	for _, v := range emotions {
+		sum += v
+	}
+	return energy * (1.0 + sum)
+}
+
+// InitializeDimensions — базовые координаты
+func InitializeDimensions() map[string]float64 {
+	return map[string]float64{
+		"time": float64(time.Now().Unix()),
+	}
+}
+
+// GenerateSignal — создание нового сигнала
+func GenerateSignal(origin, content, signalType string, energy float64, emotion map[string]float64) types.Signal {
+	s := types.Signal{
+		ID:           GenerateID(),
+		Type:         signalType,
+		Content:      content,
+		Energy:       energy,
+		Mass:         CalculateMass(energy, emotion),
+		EmotionalTag: emotion,
+		Origin:       origin,
+		Dimensions:   InitializeDimensions(),
+		Timestamp:    time.Now(),
+	}
+	return s
+}
+
+// LogSignal — запись сигнала
+func LogSignal(s types.Signal) {
+	SignalLog = append(SignalLog, s)
+	fmt.Printf("[SignalEngine] New signal: [%s] %s (mass=%.2f)\n", s.Type, s.Content, s.Mass)
+}
+
+// processInbox — обработка сигналов из канала SignalInbox
+func processInbox() {
+	for s := range SignalInbox {
+		LogSignal(s)
+		thought := thoughtengine.ReceiveSignal(s)
+		emotion := thoughtengine.LastEmotion()
+		consciousnesshub.UpdateSnapshot(s, emotion, thought.Thread)
+	}
+}
+
+"C:\Users\99650\MVP_ARU_AGI\core\thoughtengine\thoughtengine.go":
+package thoughtengine
+
+import (
+	"fmt"
+
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/flowengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/emotionengine"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/willengine"
+)
+
+type Thought struct {
+	ID       string
+	Signal   types.Signal
+	Priority float64
+	Form     string
+	Thread   flowengine.ThoughtThread
+}
+
+var ThoughtPool []Thought
+var lastEmotion types.Emotion
+
+
+
+// ReceiveSignal — приём сигнала и формирование мысли
+func ReceiveSignal(signal types.Signal) Thought {
+	priority := emotionengine.ComputePriority(signal)
+	emotion := emotionengine.GenerateEmotion(signal)
+
+	th := Thought{
+		ID:       "thought_" + signal.ID,
+		Signal:   signal,
+		Priority: priority,
+		Form:     DetectForm(signal),
+	}
+
+	// создаём поток и сохраняем в структуру
+	thread := flowengine.CreateThread(signal)
+	th.Thread = thread
+
+	// сохраняем в Pool
+	ThoughtPool = append(ThoughtPool, th)
+	lastEmotion = emotion
+
+	fmt.Printf("[ThoughtEngine] New thought: %s (form=%s, priority=%.2f)\n", th.ID, th.Form, th.Priority)
+
+	if priority > 0.5 {
+		flowengine.Schedule(signal)
+		willengine.GenerateWill(signal)
+	}
+
+	return th
+}
+
+// LastEmotion — возвращает последнюю эмоцию
+func LastEmotion() types.Emotion {
+	return lastEmotion
+}
+
+// DetectForm — упрощённая классификация типа мысли
+func DetectForm(signal types.Signal) string {
+	switch signal.Type {
+	case "goal":
+		return "deductive"
+	case "error", "paradox":
+		return "critical"
+	case "emotion":
+		return "introspective"
+	case "phantom":
+		return "abductive"
+	default:
+		return "generic"
+	}
+}
+
+
+"C:\Users\99650\MVP_ARU_AGI\core\willengine\willengine.go":
+package willengine
+
+import (
+	"fmt"
+	"github.com/Mukhameds/MVP_ARU_AGI/types"
+)
+
+// Will — воля на основе мысли
+type Will struct {
+	ID       string
+	SignalID string
+	Goal     string
+	Power    float64
+	Active   bool
+}
+
+var WillPool []Will
+
+// GenerateWill — на основе мысли формируем волю
+func GenerateWill(signal types.Signal) Will {
+	power := signal.Mass * 0.5 // Усиление на основе массы сигнала
+	if tag, ok := signal.EmotionalTag["fear"]; ok {
+		power += tag * 0.5 // Усиливаем волю, если есть страх
+	}
+	
+	// Обновим цель на основе инстинкта
+	goal := signal.Content // Цель по сигналу
+
+	w := Will{
+		ID:       "will_" + signal.ID,
+		SignalID: signal.ID,
+		Power:    power,
+		Goal:     goal,
+		Active:   true,
+	}
+
+	// Добавляем в пул
+	WillPool = append(WillPool, w)
+	fmt.Printf("[WillEngine] Will generated: %s → %s (power=%.2f)\n", w.ID, w.Goal, w.Power)
+
+	return w
+}
+
+// ProcessWill — выполнение воли
+func ProcessWill(w Will) {
+	if w.Active {
+		// Логика исполнения воли, например, защита, исследование
+		fmt.Printf("[WillEngine] Acting on will: %s → %s\n", w.ID, w.Goal)
+		// Выполняем действие (могут быть сигналы или физические действия)
+	}
+}
+
+
+тест:
+
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980476497573900 (form=generic, priority=3.80)
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980476499757800 (form=generic, priority=1.86)
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980476500334700 (form=generic, priority=3.08)
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980476502235800 (form=generic, priority=1.37)
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980476502820500 (form=generic, priority=3.80)
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+[FlowEngine] Thread completed: sig_1746980473494603000
+[FlowEngine] Thinking on signal: sig_1746980473494603000 (task)
+[FlowEngine] Thread completed: sig_1746980473494603000
+[FlowEngine] Thinking on signal: sig_1746980473494603000 (study)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980479504324700 (form=generic, priority=3.80)
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980479505630300 (form=generic, priority=1.86)
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980479506852500 (form=generic, priority=3.08)
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980479508071600 (form=generic, priority=1.37)
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980479509872700 (form=generic, priority=3.80)
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+[FlowEngine] Thread completed: sig_1746980473494603000
+[FlowEngine] Thinking on signal: sig_1746980473495127500 (threat)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980482512063900 (form=generic, priority=3.80)
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980482517027900 (form=generic, priority=1.86)
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980482522031800 (form=generic, priority=3.08)
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980482524465100 (form=generic, priority=1.37)
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980482526189600 (form=generic, priority=3.80)
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+
+🌀 OBSERVE:
+🧠 Consciousness Snapshot:
+  🔑 ID: ARU-CORE-01
+  🧠 Last Thought: threat
+  ❤️ Emotion: fear 0.5
+  🧠 Thoughts in Context: 20
+  🔁 Signals Seen: 20
+
+[FlowEngine] Thread completed: sig_1746980473495127500
+[FlowEngine] Thinking on signal: sig_1746980476497573900 (danger)
+[FlowEngine] Thread completed: sig_1746980476497573900
+[FlowEngine] Thinking on signal: sig_1746980476499757800 (exploration)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980485528475000 (form=generic, priority=3.80)
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980485531557400 (form=generic, priority=1.86)
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980485535542000 (form=generic, priority=3.08)
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980485538494000 (form=generic, priority=1.37)
+[FlowEngine] Queued: study
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[ConsciousnessHub] Context updated: study | Emotion: fear (0.50) | Will: study
+[SignalEngine] New signal: [instinct] threat (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980485545230100 (form=generic, priority=3.80)
+[FlowEngine] Queued: threat
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[ConsciousnessHub] Context updated: threat | Emotion: fear (0.50) | Will: threat
+[FlowEngine] Thread completed: sig_1746980476499757800
+[FlowEngine] Thinking on signal: sig_1746980476500334700 (task)
+[InstinctCore] Triggered signal: danger
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[InstinctCore] Triggered signal: exploration
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[InstinctCore] Triggered signal: task
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[InstinctCore] Triggered signal: study
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[InstinctCore] Triggered signal: threat
+[WillEngine] Will generated: will_sig_1746980473494603000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980473494603000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980473494603000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980473494603000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980473495127500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476497573900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980476499757800 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980476500334700 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980476502235800 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980476502820500 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479504324700 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980479505630300 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980479506852500 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980479508071600 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980479509872700 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482512063900 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980482517027900 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980482522031800 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980482524465100 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980482526189600 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485528475000 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980485531557400 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980485535542000 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980485538494000 → study (power=1.02)
+[WillEngine] Will generated: will_sig_1746980485545230100 → threat (power=1.40)
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[SignalEngine] New signal: [instinct] danger (mass=1.90)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980488549156300 (form=generic, priority=3.80)
+[FlowEngine] Queued: danger
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[WillEngine] Will generated: will_sig_1746980488549156300 → danger (power=1.40)
+[ConsciousnessHub] Context updated: danger | Emotion: fear (0.50) | Will: danger
+[SignalEngine] New signal: [instinct] exploration (mass=1.33)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980488552899000 (form=generic, priority=1.86)
+[FlowEngine] Queued: exploration
+[WillEngine] Will generated: will_sig_1746980488552899000 → exploration (power=1.11)
+[WillEngine] Will generated: will_sig_1746980488552899000 → exploration (power=1.11)
+[ConsciousnessHub] Context updated: exploration | Emotion: fear (0.50) | Will: exploration
+[SignalEngine] New signal: [instinct] task (mass=1.71)
+[EmotionEngine] Generated emotion: fear 0.5
+[ThoughtEngine] New thought: thought_sig_1746980488555150200 (form=generic, priority=3.08)
+[FlowEngine] Queued: task
+[WillEngine] Will generated: will_sig_1746980488555150200 → task (power=1.30)
+[WillEngine] Will generated: will_sig_1746980488555150200 → task (power=1.30)
+[ConsciousnessHub] Context updated: task | Emotion: fear (0.50) | Will: task
+[SignalEngine] New signal: [instinct] study (mass=1.14)

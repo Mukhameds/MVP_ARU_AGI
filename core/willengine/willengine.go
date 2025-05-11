@@ -2,7 +2,9 @@ package willengine
 
 import (
 	"fmt"
+
 	"github.com/Mukhameds/MVP_ARU_AGI/types"
+	"github.com/Mukhameds/MVP_ARU_AGI/core/memoryengine" // 🔧 импорт
 )
 
 // Will — воля на основе мысли
@@ -23,7 +25,6 @@ func GenerateWill(signal types.Signal) Will {
 		power += tag * 0.5 // Усиливаем волю, если есть страх
 	}
 	
-	// Обновим цель на основе инстинкта
 	goal := signal.Content // Цель по сигналу
 
 	w := Will{
@@ -34,18 +35,45 @@ func GenerateWill(signal types.Signal) Will {
 		Active:   true,
 	}
 
-	// Добавляем в пул
 	WillPool = append(WillPool, w)
 	fmt.Printf("[WillEngine] Will generated: %s → %s (power=%.2f)\n", w.ID, w.Goal, w.Power)
+
+	// 🔧 Усиливаем логическую связь в семантической памяти
+	memoryengine.LinkQBits("thought_" + signal.ID, w.ID, 1.0)
+
 
 	return w
 }
 
 // ProcessWill — выполнение воли
 func ProcessWill(w Will) {
-	if w.Active {
-		// Логика исполнения воли, например, защита, исследование
-		fmt.Printf("[WillEngine] Acting on will: %s → %s\n", w.ID, w.Goal)
-		// Выполняем действие (могут быть сигналы или физические действия)
+	if !w.Active {
+		return
 	}
+
+	fmt.Printf("[WillEngine] Acting on will: %s → %s (power=%.2f)\n", w.ID, w.Goal, w.Power)
+
+	switch w.Goal {
+	case "defend_self":
+		act("Activate defense system")
+	case "search_area":
+		act("Scan environment for anomalies")
+	case "fulfill_goal":
+		act("Execute assigned objective from Architect")
+	case "gain_knowledge":
+		act("Query internal memory and seek new patterns")
+	case "escape_danger":
+		act("Initiate retreat or avoidance maneuver")
+	case "clarify_direction":
+		act("Generate phantom: clarify current purpose")
+	default:
+		act("Reflect internally on goal: " + w.Goal)
+	}
+
+	w.Active = false
+}
+
+// act — безопасный внутренний исполняемый механизм
+func act(description string) {
+	fmt.Printf("[Action] ➤ %s\n", description)
 }
